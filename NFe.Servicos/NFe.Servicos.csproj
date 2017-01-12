@@ -61,14 +61,17 @@
     <ProjectReference Include="..\NFe.Classes\NFe.Classes.csproj">
       <Project>{29ca1da2-440d-484b-951a-cf1b2eb27984}</Project>
       <Name>NFe.Classes</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\NFe.Utils\NFe.Utils.csproj">
       <Project>{e35e7c4a-5690-4979-8b43-002975b48eaa}</Project>
       <Name>NFe.Utils</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\NFe.Wsdl\NFe.Wsdl.csproj">
       <Project>{23ba5fa7-8bd6-4ae1-9895-54f119dd15fa}</Project>
       <Name>NFe.Wsdl</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

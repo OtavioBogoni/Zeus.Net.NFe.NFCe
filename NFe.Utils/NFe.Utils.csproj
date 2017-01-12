@@ -83,6 +83,7 @@
     <ProjectReference Include="..\NFe.Classes\NFe.Classes.csproj">
       <Project>{29CA1DA2-440D-484B-951A-CF1B2EB27984}</Project>
       <Name>NFe.Classes</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
