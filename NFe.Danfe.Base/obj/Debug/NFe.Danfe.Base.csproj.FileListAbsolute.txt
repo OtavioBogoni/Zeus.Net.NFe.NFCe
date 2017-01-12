@@ -1,0 +1,5 @@
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Base\bin\Debug\NFe.Danfe.Base.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Base\bin\Debug\NFe.Danfe.Base.pdb
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Base\obj\Debug\NFe.Danfe.Base.csprojResolveAssemblyReference.cache
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Base\obj\Debug\NFe.Danfe.Base.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Base\obj\Debug\NFe.Danfe.Base.pdb

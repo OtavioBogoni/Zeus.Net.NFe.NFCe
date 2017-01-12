@@ -47,7 +47,7 @@
     <Compile Include="AdmCsc\ExtretAdmCscNFCe.cs" />
     <Compile Include="Assinatura\Assinador.cs" />
     <Compile Include="Autorizacao\ExtenviNFe3.cs" />
-    <Compile Include="Auxiliar.cs" />
+    <Compile Include="Conversao.cs" />
     <Compile Include="Assinatura\CertificadoDigital.cs" />
     <Compile Include="Compressao.cs" />
     <Compile Include="ConfiguracaoCertificado.cs" />
@@ -56,20 +56,30 @@
     <Compile Include="ConsultaCadastro\ExtretConsCad.cs" />
     <Compile Include="Consulta\ExtconsSitNFe.cs" />
     <Compile Include="Consulta\ExtretConsSitNFe.cs" />
+    <Compile Include="DistribuicaoDFe\ExtdistDFeInt.cs" />
+    <Compile Include="DistribuicaoDFe\ExtretDistDFeInt.cs" />
     <Compile Include="Download\ExtdownloadNFe.cs" />
     <Compile Include="Download\ExtretDownloadNFe.cs" />
+    <Compile Include="Email\ConfiguracaoEmail.cs" />
+    <Compile Include="Email\EmailBuilder.cs" />
     <Compile Include="Evento\ExtenvEvento.cs" />
     <Compile Include="Evento\Extevento.cs" />
     <Compile Include="Evento\ExtretEnvEvento.cs" />
     <Compile Include="EnumExt.cs" />
+    <Compile Include="Excecoes\FabricaComunicacaoException.cs" />
+    <Compile Include="Excecoes\ValidacaoSchemaException.cs" />
+    <Compile Include="Excecoes\ComunicacaoException.cs" />
+    <Compile Include="InformacoesSuplementares\ExtinfNFeSupl.cs" />
     <Compile Include="Inutilizacao\ExtinutNFe.cs" />
     <Compile Include="Inutilizacao\ExtretInutNFe.cs" />
+    <Compile Include="NfeSituacao.cs" />
     <Compile Include="NFe\ExtNfeProc.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Recepcao\ExtconsReciNFe.cs" />
     <Compile Include="Recepcao\ExtenviNFe2.cs" />
     <Compile Include="Recepcao\ExtretConsReciNFe.cs" />
     <Compile Include="Recepcao\ExtretEnviNFe.cs" />
+    <Compile Include="Reflexao.cs" />
     <Compile Include="Status\ExtconsStatServ.cs" />
     <Compile Include="NFe\ExtNFe.cs" />
     <Compile Include="Consulta\ExtprocEventoNFe.cs" />
@@ -77,6 +87,7 @@
     <Compile Include="Gerador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FuncoesXml.cs" />
+    <Compile Include="Tributacao\Estadual\ICMSGeral.cs" />
     <Compile Include="Validacao\Validador.cs" />
   </ItemGroup>
   <ItemGroup>

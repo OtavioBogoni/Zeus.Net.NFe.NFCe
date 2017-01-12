@@ -32,6 +32,7 @@
 /********************************************************************************/
 using System;
 using System.IO;
+using System.Net;
 using NFe.Classes;
 using NFe.Classes.Informacoes.Identificacao.Tipos;
 using NFe.Classes.Servicos.Tipos;
@@ -81,9 +82,19 @@ namespace NFe.Utils
         public ModeloDocumento ModeloDocumento { get; set; }
 
         /// <summary>
-        ///     Versão do serviço RecepcaoEvento
+        ///     Versão do serviço RecepcaoEvento para Carta de Correção e Cancelamento
         /// </summary>
-        public VersaoServico VersaoRecepcaoEvento { get; set; }
+        public VersaoServico VersaoRecepcaoEventoCceCancelamento { get; set; }
+
+        /// <summary>
+        ///     Versão do serviço RecepcaoEvento para EPEC
+        /// </summary>
+        public VersaoServico VersaoRecepcaoEventoEpec { get; set; }
+
+        /// <summary>
+        ///     Versão do serviço RecepcaoEvento para Manifestação do destinatário
+        /// </summary>
+        public VersaoServico VersaoRecepcaoEventoManifestacaoDestinatario { get; set; }
 
         /// <summary>
         ///     Versão do serviço NfeRecepcao
@@ -146,7 +157,12 @@ namespace NFe.Utils
         public VersaoServico VersaoNfceAministracaoCSC { get; set; }
 
         /// <summary>
-        ///     Diretório onde estão aramazenados os schemas para validação
+        ///     Protocolo de segurança que deve ser utilizado no consumo dos webservices
+        /// </summary>
+        public SecurityProtocolType ProtocoloDeSeguranca { get; set; }
+
+        /// <summary>
+        ///     Diretório onde estão armazenados os schemas para validação
         /// </summary>
         public string DiretorioSchemas
         {

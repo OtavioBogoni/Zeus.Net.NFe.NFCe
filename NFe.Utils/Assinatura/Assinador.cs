@@ -39,63 +39,58 @@ using Signature = NFe.Classes.Assinatura.Signature;
 
 namespace NFe.Utils.Assinatura
 {
-	public static class Assinador
-	{
-		/// <summary>
-		///     Obtém a asinatura de um objeto serializável
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="objeto"></param>
-		/// <param name="id"></param>
-		/// <returns>Retorna um objeto do tipo Classes.Assinatura.Signature, contendo a assinatura do objeto passado como parâmetro</returns>
-		public static Signature ObterAssinatura<T>(T objeto, string id) where T : class
-		{
-			var objetoLocal = objeto;
-			if (id == null)
-				throw new Exception("Não é possível assinar um objeto evento sem sua respectiva Id!");
+    public static class Assinador
+    {
+        /// <summary>
+        ///     Obtém a assinatura de um objeto serializável
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objeto"></param>
+        /// <param name="id"></param>
+        /// <param name="certificadoDigital">Informe o certificado digital, se já possuir esse em cache, evitando novo acesso ao certificado</param>
+        /// <returns>Retorna um objeto do tipo Classes.Assinatura.Signature, contendo a assinatura do objeto passado como parâmetro</returns>
+        public static Signature ObterAssinatura<T>(T objeto, string id, X509Certificate2 certificadoDigital = null) where T : class
+        {
+            var objetoLocal = objeto;
+            if (id == null)
+                throw new Exception("Não é possível assinar um objeto evento sem sua respectiva Id!");
 
-			var cfgServico = ConfiguracaoServico.Instancia;
+            var certificado = certificadoDigital ?? CertificadoDigital.ObterCertificado();
+            try
+            {
+                var documento = new XmlDocument { PreserveWhitespace = true };
+                documento.LoadXml(FuncoesXml.ClasseParaXmlString(objetoLocal));
+                var docXml = new SignedXml(documento) { SigningKey = certificado.PrivateKey };
+                var reference = new Reference { Uri = "#" + id };
 
-			X509Certificate2 certificado;
+                // adicionando EnvelopedSignatureTransform a referencia
+                var envelopedSigntature = new XmlDsigEnvelopedSignatureTransform();
+                reference.AddTransform(envelopedSigntature);
 
-			if (!string.IsNullOrEmpty(cfgServico.Certificado.Arquivo))
-			{
-				certificado = CertificadoDigital.ObterDeArquivo(cfgServico.Certificado.Arquivo, cfgServico.Certificado.Senha);
-			}
-			else if (!string.IsNullOrEmpty(cfgServico.Certificado.Serial))
-			{
-				certificado = CertificadoDigital.ObterDoRepositorio(cfgServico.Certificado.Serial, cfgServico.Certificado.Senha);
-			}
-			else
-			{
-				certificado = CertificadoDigital.ObterDeBytes(cfgServico.Certificado.Bytes, cfgServico.Certificado.Senha);
-			}
+                var c14Transform = new XmlDsigC14NTransform();
+                reference.AddTransform(c14Transform);
 
-			var documento = new XmlDocument { PreserveWhitespace = true };
-			documento.LoadXml(FuncoesXml.ClasseParaXmlString(objetoLocal));
-			var docXml = new SignedXml(documento) { SigningKey = certificado.PrivateKey };
-			var reference = new Reference { Uri = "#" + id };
+                docXml.AddReference(reference);
 
-			// adicionando EnvelopedSignatureTransform a referencia
-			var envelopedSigntature = new XmlDsigEnvelopedSignatureTransform();
-			reference.AddTransform(envelopedSigntature);
+                // carrega o certificado em KeyInfoX509Data para adicionar a KeyInfo
+                var keyInfo = new KeyInfo();
+                keyInfo.AddClause(new KeyInfoX509Data(certificado));
 
-			var c14Transform = new XmlDsigC14NTransform();
-			reference.AddTransform(c14Transform);
+                docXml.KeyInfo = keyInfo;
+                docXml.ComputeSignature();
 
-			docXml.AddReference(reference);
-
-			// carrega o certificado em KeyInfoX509Data para adicionar a KeyInfo
-			var keyInfo = new KeyInfo();
-			keyInfo.AddClause(new KeyInfoX509Data(certificado));
-
-			docXml.KeyInfo = keyInfo;
-			docXml.ComputeSignature();
-
-			//// recuperando a representacao do XML assinado
-			var xmlDigitalSignature = docXml.GetXml();
-			var assinatura = FuncoesXml.XmlStringParaClasse<Signature>(xmlDigitalSignature.OuterXml);
-			return assinatura;
-		}
-	}
+                //// recuperando a representação do XML assinado
+                var xmlDigitalSignature = docXml.GetXml();
+                var assinatura = FuncoesXml.XmlStringParaClasse<Signature>(xmlDigitalSignature.OuterXml);
+                return assinatura;
+            }
+            finally
+            {
+                //Se não mantém os dados do certificado em cache e o certificado não foi passado por parâmetro(isto é, ele foi criado dentro deste método),
+                //então libera o certificado, chamando o método reset.
+                if (!ConfiguracaoServico.Instancia.Certificado.ManterDadosEmCache & certificadoDigital == null)
+                    certificado.Reset();
+            }
+        }
+    }
 }

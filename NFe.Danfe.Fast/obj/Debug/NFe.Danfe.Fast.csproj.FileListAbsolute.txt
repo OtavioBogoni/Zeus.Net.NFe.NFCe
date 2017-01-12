@@ -1,0 +1,14 @@
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\bin\Debug\Dlls\FastReport.Bars.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\bin\Debug\Dlls\FastReport.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\bin\Debug\Dlls\FastReport.Editor.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\bin\Debug\NFe.Danfe.Fast.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\bin\Debug\NFe.Danfe.Fast.pdb
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\bin\Debug\FastReport.Bars.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\bin\Debug\FastReport.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\bin\Debug\FastReport.Editor.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\obj\Debug\NFe.Danfe.Fast.csprojResolveAssemblyReference.cache
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\obj\Debug\NFe.Danfe.Fast.g.resources
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\obj\Debug\NFe.Danfe.Fast.Properties.Resources.resources
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\obj\Debug\NFe.Danfe.Fast.csproj.GenerateResource.Cache
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\obj\Debug\NFe.Danfe.Fast.dll
+C:\Users\otavio.TRIADESOLUCOES\Zeus.Net.NFe.NFCe\NFe.Danfe.Fast\obj\Debug\NFe.Danfe.Fast.pdb

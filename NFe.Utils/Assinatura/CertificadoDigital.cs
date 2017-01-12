@@ -41,6 +41,8 @@ namespace NFe.Utils.Assinatura
 {
 	public static class CertificadoDigital
 	{
+		private static X509Certificate2 _certificado;
+
 		/// <summary>
 		/// Exibe a lista de certificados instalados no PC e devolve o certificado selecionado
 		/// </summary>
@@ -48,7 +50,7 @@ namespace NFe.Utils.Assinatura
 		public static X509Certificate2 ObterDoRepositorio()
 		{
 			var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-			store.Open(OpenFlags.OpenExistingOnly | OpenFlags.MaxAllowed);
+			store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
 
 			var collection = store.Certificates;
 			var fcollection = collection.Find(X509FindType.FindByTimeValid, DateTime.Now, true);
@@ -78,18 +80,24 @@ namespace NFe.Utils.Assinatura
 			X509Certificate2 certificado = null;
 
 			var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-			store.Open(OpenFlags.MaxAllowed);
-
-			foreach (var item in store.Certificates)
+			try
 			{
-				if (item.SerialNumber != null && item.SerialNumber.ToUpper().Equals(numeroSerial.ToUpper(), StringComparison.InvariantCultureIgnoreCase))
-					certificado = item;
+				store.Open(OpenFlags.MaxAllowed);
+
+				foreach (var item in store.Certificates)
+				{
+					if (item.SerialNumber != null && item.SerialNumber.ToUpper().Equals(numeroSerial.ToUpper(), StringComparison.InvariantCultureIgnoreCase))
+						certificado = item;
+				}
+
+				if (certificado == null)
+					throw new Exception(string.Format("Certificado digital nº {0} não encontrado!", numeroSerial.ToUpper()));
+			}
+			finally
+			{
+				store.Close();
 			}
 
-			if (certificado == null)
-				throw new Exception(string.Format("Certificado digital nº {0} não encontrado!", numeroSerial.ToUpper()));
-
-			store.Close();
 			if (string.IsNullOrEmpty(senha)) return certificado;
 
 			//Se a senha for passada no parâmetro
@@ -139,6 +147,43 @@ namespace NFe.Utils.Assinatura
 		public static X509Certificate2 ObterDeBytes(byte[] bytes, string senha)
 		{
 			return new X509Certificate2(bytes, senha, X509KeyStorageFlags.MachineKeySet);
+		}
+
+		/// <summary>
+		/// Obtém um objeto contendo o certificado digital
+		/// <para>Se for informado <see cref="ConfiguracaoCertificado.Arquivo"/>,
+		/// o certificado digital será obtido pelo método <see cref="ObterDeArquivo(string,string)"/>,
+		/// senão será obtido pelo método <see cref="ObterDoRepositorio()"/> </para>
+		/// <para>Para liberar os recursos do certificado, após seu uso, invoque o método <see cref="X509Certificate2.Reset()"/></para>
+		/// </summary>
+		public static X509Certificate2 ObterCertificado()
+		{
+			if (!ConfiguracaoServico.Instancia.Certificado.ManterDadosEmCache)
+				return ObterDadosCertificado();
+			if (_certificado != null)
+				return _certificado;
+			_certificado = ObterDadosCertificado();
+			return _certificado;
+		}
+
+		private static X509Certificate2 ObterDadosCertificado()
+		{
+			X509Certificate2 certificado;
+
+			if (!string.IsNullOrEmpty(ConfiguracaoServico.Instancia.Certificado.Arquivo))
+			{
+				certificado = ObterDeArquivo(ConfiguracaoServico.Instancia.Certificado.Arquivo, ConfiguracaoServico.Instancia.Certificado.Senha);
+			}
+			else if (!string.IsNullOrEmpty(ConfiguracaoServico.Instancia.Certificado.Serial))
+			{
+				certificado = ObterDoRepositorio(ConfiguracaoServico.Instancia.Certificado.Serial, ConfiguracaoServico.Instancia.Certificado.Senha);
+			}
+			else
+			{
+				certificado = ObterDeBytes(ConfiguracaoServico.Instancia.Certificado.Bytes, ConfiguracaoServico.Instancia.Certificado.Senha);
+			}
+
+			return certificado;
 		}
 	}
 }

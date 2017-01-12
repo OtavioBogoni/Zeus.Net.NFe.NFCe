@@ -35,12 +35,17 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using NFe.Classes.Informacoes.Detalhe.DeclaracaoImportacao;
 using NFe.Classes.Informacoes.Detalhe.Exportacao;
-using NFe.Classes.Informacoes.Detalhe.Produto_Específico;
+using NFe.Classes.Informacoes.Detalhe.ProdEspecifico;
 
 namespace NFe.Classes.Informacoes.Detalhe
 {
     public class prod
     {
+        public prod()
+        {
+            NVE = new List<string>();
+        }
+
         private string _nRecopi;
         private ProdutoEspecifico _produtoEspecifico;
         private decimal _qcom;
@@ -82,8 +87,10 @@ namespace NFe.Classes.Informacoes.Detalhe
 
         /// <summary>
         ///     105a - Nomenclatura de Valor aduaneio e Estatístico
+        ///     <para>Ocorrência: 0-8</para>
         /// </summary>
-        public string NVE { get; set; }
+        [XmlElement("NVE")]
+        public List<string> NVE { get; set; }
 
         /// <summary>
         /// I05c - Código CEST
@@ -225,7 +232,7 @@ namespace NFe.Classes.Informacoes.Detalhe
         /// <summary>
         ///     I61 - Item do Pedido de Compra
         /// </summary>
-        public int nItemPed { get; set; }
+        public int? nItemPed { get; set; }
 
         /// <summary>
         ///     I70 - Número de controle da FCI - Ficha de Conteúdo de Importação
@@ -238,10 +245,10 @@ namespace NFe.Classes.Informacoes.Detalhe
         ///     <para>L01 (arma) - Detalhamento de Armamento</para>
         ///     <para>LA01 (comb) - Informações específicas para combustíveis líquidos e lubrificantes</para>
         /// </summary>
-        [XmlElement("veicProd", typeof (veicProd))]
-        [XmlElement("med", typeof (med))]
-        [XmlElement("arma", typeof (arma))]
-        [XmlElement("comb", typeof (comb))]
+        [XmlElement("veicProd", typeof(veicProd))]
+        [XmlElement("med", typeof(med))]
+        [XmlElement("arma", typeof(arma))]
+        [XmlElement("comb", typeof(comb))]
         public ProdutoEspecifico ProdutoEspecifico
         {
             get { return _produtoEspecifico; }
@@ -264,6 +271,11 @@ namespace NFe.Classes.Informacoes.Detalhe
                 ProdutoEspecifico = null; //ProdutoEspecifico e nRECOPI são mutuamente exclusivos
                 _nRecopi = value;
             }
+        }
+
+        public bool ShouldSerializenItemPed()
+        {
+            return nItemPed.HasValue;
         }
 
         public bool ShouldSerializevFrete()
